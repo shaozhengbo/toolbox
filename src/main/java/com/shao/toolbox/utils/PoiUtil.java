@@ -29,20 +29,10 @@ public class PoiUtil {
 	 */
 	public static Map<String, List<List<String>>> readExcel(File file) throws FileNotFoundException, IOException {
 
-		Workbook wb = null;
 		Map<String, List<List<String>>> resultMap = new HashMap<String, List<List<String>>>();
 
-		// 获取文件名称
-		String fileName = file.getName();
-
-		// 初始化workbook对象
-		if (fileName.substring(fileName.lastIndexOf(".")).equals(".xls")) {
-			wb = new HSSFWorkbook(new FileInputStream(file));
-		} else if (fileName.substring(fileName.lastIndexOf(".")).equals(".xlsx")) {
-			wb = new XSSFWorkbook(new FileInputStream(file));
-		} else {
-			return null;
-		}
+		// 获取Workbook对象
+		Workbook wb = getWorkBook(file);
 
 		try {
 			// 获取sheet数量
@@ -90,20 +80,10 @@ public class PoiUtil {
 	public static Map<String, List<List<String>>> readExcelBySheetName(File file, String sheetName)
 			throws FileNotFoundException, IOException {
 
-		Workbook wb = null;
 		Map<String, List<List<String>>> resultMap = new HashMap<String, List<List<String>>>();
 
-		// 获取文件名称
-		String fileName = file.getName();
-
-		// 初始化workbook对象
-		if (fileName.substring(fileName.lastIndexOf(".")).equals(".xls")) {
-			wb = new HSSFWorkbook(new FileInputStream(file));
-		} else if (fileName.substring(fileName.lastIndexOf(".")).equals(".xlsx")) {
-			wb = new XSSFWorkbook(new FileInputStream(file));
-		} else {
-			return null;
-		}
+		// 获取Workbook对象
+		Workbook wb = getWorkBook(file);
 
 		try {
 			Sheet sheet = wb.getSheet(sheetName);
@@ -144,20 +124,10 @@ public class PoiUtil {
 	public static Map<String, List<List<String>>> readExcelBySheetIndex(File file, int index)
 			throws FileNotFoundException, IOException {
 
-		Workbook wb = null;
 		Map<String, List<List<String>>> resultMap = new HashMap<String, List<List<String>>>();
 
-		// 获取文件名称
-		String fileName = file.getName();
-
-		// 初始化workbook对象
-		if (fileName.substring(fileName.lastIndexOf(".")).equals(".xls")) {
-			wb = new HSSFWorkbook(new FileInputStream(file));
-		} else if (fileName.substring(fileName.lastIndexOf(".")).equals(".xlsx")) {
-			wb = new XSSFWorkbook(new FileInputStream(file));
-		} else {
-			return null;
-		}
+		// 获取Workbook对象
+		Workbook wb = getWorkBook(file);
 
 		try {
 			Sheet sheet = wb.getSheetAt(index);
@@ -184,6 +154,27 @@ public class PoiUtil {
 			}
 		}
 		return resultMap;
+	}
+	
+	/**
+	 * 获取Workbook对象
+	 * @param file 
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static Workbook getWorkBook(File file) throws FileNotFoundException, IOException {
+		// 获取文件名称
+		String fileName = file.getName();
+
+		// 初始化workbook对象
+		if (fileName.substring(fileName.lastIndexOf(".")).equals(".xls")) {
+			return new HSSFWorkbook(new FileInputStream(file));
+		} else if (fileName.substring(fileName.lastIndexOf(".")).equals(".xlsx")) {
+			return new XSSFWorkbook(new FileInputStream(file));
+		} else {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("deprecation")
